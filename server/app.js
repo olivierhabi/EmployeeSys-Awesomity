@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import Users from "./routes/users";
 import Employees from "./routes/employees";
+import Auth from "./routes/auth";
 dotenv.config();
 
 const app = express();
@@ -13,6 +14,7 @@ app.use(bodyParser.json());
 const api = "/api";
 app.use(api, Users);
 app.use(api, Employees);
+app.use(api, Auth);
 
 app.get("/", (req, res) => {
   return res.status(200).send({
