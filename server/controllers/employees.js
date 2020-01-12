@@ -80,6 +80,32 @@ class Employee {
       .status(404)
       .send({ status: 404, message: "Employee id not valid" });
   }
+  /**
+   *
+   * @param {object} req
+   * @param {object} res
+   * @return {object} Employee object
+   */
+  static async activate(req, res) {
+    if (isValid.isInt(req.params.id)) {
+      const values = ["active", req.params.id];
+      const updateOne = `UPDATE employees SET status=($1) WHERE id=($2) returning *`;
+
+      const response = await pool.query(updateOne, values);
+      if (response.rows.length == 0) {
+        return res
+          .status(404)
+          .send({ status: 404, message: "Employee not found" });
+      }
+      const data = response.rows[0];
+      return res
+        .status(200)
+        .send({ status: 200, message: "Employee account is Activated" });
+    }
+    return res
+      .status(404)
+      .send({ status: 404, message: "Employee id not valid" });
+  }
 }
 
 export default Employee;
