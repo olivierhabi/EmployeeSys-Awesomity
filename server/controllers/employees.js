@@ -156,6 +156,28 @@ class Employee {
       .status(404)
       .send({ status: 404, message: "Employee id not valid" });
   }
+  static async search(req, res) {
+    if (isValid.isInt(req.params.id)) {
+      const employee = `SELECT * FROM employees WHERE id = $1`;
+      const getEmployee = await pool.query(employee, [req.params.id]);
+      const employees = getEmployee.rows;
+
+      if (employees.length == 0) {
+        return res
+          .status(404)
+          .send({ status: 404, message: "Employee not found" });
+      }
+      const data = employees[0];
+      return res.status(200).send({
+        status: 200,
+        message: "Employee found successfully",
+        data
+      });
+    }
+    return res
+      .status(404)
+      .send({ status: 404, message: "Employee id not valid" });
+  }
 }
 
 export default Employee;

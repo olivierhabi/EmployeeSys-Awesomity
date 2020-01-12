@@ -13,5 +13,6 @@ router.put("/employees/:id", Employees.update);
 router.put("/employees/:id/activate", Employees.activate);
 router.put("/employees/:id/suspend", Employees.suspend);
 router.delete("/employees/:id", Employees.delete);
+router.post("/employees/search/:id", Employees.search);
 
 export default router;
