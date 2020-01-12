@@ -1,15 +1,11 @@
 import express from "express";
 import Users from "../controllers/users";
-// import auth from '../middleware/auth';
-// import admin from '../middleware/admin';
-// import validateUser from '../helpers/validators/signupValidator';
+import validateUser from "../helpers/validate/userValidator";
 
-// const { validate } = validateUser;
+const { validate } = validateUser;
 
 const router = express.Router();
 
-router.post("/auth/signup", Users.create);
-
-// router.get('/users/:id', Users.getOne);
+router.post("/auth/signup", validate, Users.create);
 
 export default router;
