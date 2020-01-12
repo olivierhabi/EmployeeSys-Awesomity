@@ -1,8 +1,5 @@
 import _ from "lodash";
-// import uuidv4 from 'uuid/v4';
 import hashPassword from "../helpers/hashPassword";
-import token from "../helpers/gentoken";
-
 import { Pool } from "pg";
 import dotenv from "dotenv";
 
@@ -29,16 +26,16 @@ class User {
       req.body.dBirth,
       password,
       req.body.status,
-      req.body.position
+      "manager"
     ];
     console.log(values);
     const text = `INSERT INTO users(name, na_id, phone, email, d_birth, password, status, position) VALUES($1, $2, $3, $4, $5, $6, $7, $8) returning *`;
     try {
       const { rows } = await pool.query(text, values);
-      const data = await token(rows[0]);
+      // const data = await token(rows[0]);
       return res
         .status(201)
-        .send({ status: 201, message: "User created successfully", data });
+        .send({ status: 201, message: "User created successfully" });
     } catch (error) {
       return res.status(400).send({ status: 400, message: error.detail });
     }
