@@ -9,6 +9,7 @@ import Users from "../controllers/users";
 const router = express.Router();
 
 router.post("/auth/signup", Users.create);
+
 // router.get('/users/:id', Users.getOne);
 
 export default router;

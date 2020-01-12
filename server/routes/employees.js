@@ -9,5 +9,6 @@ import Employees from "../controllers/employees";
 const router = express.Router();
 
 router.post("/employees", Employees.create);
+router.put("/employees/:id", Employees.update);
 
 export default router;
