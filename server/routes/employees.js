@@ -11,5 +11,5 @@ const router = express.Router();
 router.post("/employees", Employees.create);
 router.put("/employees/:id", Employees.update);
 router.put("/employees/:id/activate", Employees.activate);
-
+router.put("/employees/:id/suspend", Employees.suspend);
 export default router;
