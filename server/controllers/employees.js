@@ -35,7 +35,7 @@ class Employee {
     const text = `INSERT INTO employees(employee_name, na_id, phone, email, d_birth, password, status, position) VALUES($1, $2, $3, $4, $5, $6, $7, $8) returning *`;
     try {
       const { rows } = await pool.query(text, values);
-      const data = await token(rows[0]);
+      //   const data = await token(rows[0]);
       return res
         .status(201)
         .send({ status: 201, message: "Employee created successfully" });
@@ -127,6 +127,30 @@ class Employee {
       return res
         .status(200)
         .send({ status: 200, message: "Employee account is Suspended" });
+    }
+    return res
+      .status(404)
+      .send({ status: 404, message: "Employee id not valid" });
+  }
+  /**
+   *
+   * @param {object} req
+   * @param {object} res
+   * @return {object} employee object
+   */
+  static async delete(req, res) {
+    if (isValid.isInt(req.params.id)) {
+      const deleteQuery = `DELETE FROM employees WHERE id=($1) returning *`;
+
+      const { rows } = await pool.query(deleteQuery, [req.params.id]);
+      if (rows.length == 0) {
+        return res
+          .status(404)
+          .send({ status: 404, message: "Employee not found" });
+      }
+      return res
+        .status(200)
+        .send({ status: 200, message: "Employee account is Deleted" });
     }
     return res
       .status(404)
