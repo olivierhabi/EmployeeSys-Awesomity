@@ -10,5 +10,6 @@ const router = express.Router();
 
 router.post("/employees", Employees.create);
 router.put("/employees/:id", Employees.update);
+router.put("/employees/:id/activate", Employees.activate);
 
 export default router;
