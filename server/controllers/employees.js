@@ -1,5 +1,7 @@
 import _ from "lodash";
+import isValid from "validator";
 import hashPassword from "../helpers/hashPassword";
+import { isForOfStatement } from "@babel/types";
 
 import { Pool } from "pg";
 import dotenv from "dotenv";
@@ -40,6 +42,43 @@ class Employee {
     } catch (error) {
       return res.status(400).send({ status: 400, message: error.detail });
     }
+  }
+  /**
+   *
+   * @param {object} req
+   * @param {object} res
+   * @return {object} Employee object
+   */
+  static async update(req, res) {
+    if (isValid.isInt(req.params.id)) {
+      const password = await hashPassword(req.body.password);
+      const values = [
+        req.body.name,
+        req.body.naId,
+        req.body.phone,
+        req.body.email,
+        req.body.dBirth,
+        password,
+        req.body.status,
+        req.body.position,
+        req.params.id
+      ];
+      const updateOne = `UPDATE employees SET employee_name=($1), na_id=($2), phone=($3), email=($4), d_birth=($5), password=($6), status=($7), position=($8) WHERE id=($9) returning *`;
+
+      const response = await pool.query(updateOne, values);
+      if (response.rows.length == 0) {
+        return res
+          .status(404)
+          .send({ status: 404, message: "Employee not found" });
+      }
+      const data = response.rows[0];
+      return res
+        .status(200)
+        .send({ status: 200, message: "Employee updated", data });
+    }
+    return res
+      .status(404)
+      .send({ status: 404, message: "Employee id not valid" });
   }
 }
 
