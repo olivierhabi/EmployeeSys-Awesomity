@@ -39,14 +39,13 @@
     "swagger-tools": "^0.10.4",
     "swagger-ui": "^3.23.9",
     "swagger-ui-express": "^4.0.7",
-    "validator": "^12.1.0"
-  },
-  "devDependencies": {
+    "validator": "^12.1.0",
     "@babel/core": "^7.7.7",
     "@babel/plugin-transform-runtime": "^7.8.0",
     "@babel/preset-env": "^7.7.7",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-watch": "^7.0.0"
-  }
+  },
+  "devDependencies": {}
 }
